@@ -1,0 +1,77 @@
+<div class="container mt-4">
+    <div class="table-responsive">
+        <table id="companyTable" class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Tên công ty</th>
+                    <th>Lĩnh vực</th>
+                    <th>Mã chứng khoán</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="company : ${companies}">
+                    <td th:text="${company.name}">Tên công ty</td>
+                    <td th:text="${company.sector}">Lĩnh vực</td>
+                    <td th:text="${company.stockCode}">Mã chứng khoán</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div id="chartContainer" style="height: 600px; width: 100%;">
+
+</div>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+    google.charts.load('current', { packages: ['corechart'] });
+    $(document).ready(function() {
+        $('#companyTable tbody tr').click(function() {
+            var stockCode = $(this).find('td').eq(2).text();
+            $.ajax({
+                type: 'GET',
+                data: {
+                    stockname: stockCode.toLocaleLowerCase(),
+                    dateby: 7,
+                },
+                url: '/stock', // Replace with the actual API endpoint
+                dataType: "json",
+                success: function(obj) {
+                    
+                    drawChart(obj);
+                }
+            });
+        });
+        function drawChart(data) {
+            const dataPoints = [
+                ['Ngày', 'Open','High','Low','Close','Volume'],
+            ];
+
+            for (let date in data["Time Series (Daily)"]) {
+                if (data["Time Series (Daily)"].hasOwnProperty(date)) {
+                    const dailyData = data["Time Series (Daily)"][date];
+                    dataPoints.push([date, parseFloat(dailyData["1. open"]), parseFloat(dailyData["2. high"]), parseFloat(dailyData["3. low"]), parseFloat(dailyData["4. close"]), parseFloat(dailyData["5. volume"])]);
+                }
+            }
+            console.log("obj");
+            const chartData = google.visualization.arrayToDataTable(dataPoints);
+            const options = {
+                title: 'Biểu đồ giá cổ phiếu',
+                legend: { position: 'bottom' },
+                hAxis: { title: 'Ngày' },
+                vAxis: { title: 'Giá (USD)', minValue: 0 },
+                seriesType: 'line', // Biểu đồ dạng đường
+                series: {
+                    4: { type: 'bars', targetAxisIndex: 1 } // Volume hiển thị dạng cột
+                },
+                vAxes: {
+                    0: { title: 'Giá (USD)' },
+                    1: { title: 'Khối lượng' }
+                },
+                colors: ['#4285F4', '#34A853', '#FBBC05', '#EA4335', '#9C27B0'],
+            };
+           
+            const chart = new google.visualization.ComboChart(document.getElementById('chartContainer'));
+            chart.draw(chartData, options);
+        }
+    });
+</script>

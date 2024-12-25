@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Plus Crypto</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="/static/css/custom.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">   
+            <a class="navbar-brand" href="#">
+            <img src="/static/images/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+            Company Plus Crypto
+            </a>
+            <div class="collapse navbar-collapse">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                <a class="nav-link" th:href="@{/company}">Tìm công ty</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" th:href="@{/crypto}">Tìm tiền kỹ thuật số</a>
+                </li>
+            </ul>
+            </div>
+        </nav>
+        <div id="crypto-data" class="text-center">
+            <!-- Data will be loaded here via AJAX -->
+        </div>
+        <button id="load-data" class="btn btn-primary mt-4">Load Crypto Data</button>
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="/static/js/custom.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#load-data').click(function() {
+                $.ajax({
+                    url: 'https://api.coindesk.com/v1/bpi/currentprice.json',
+                    method: 'GET',
+                    success: function(data) {
+                        $('#crypto-data').html(`
+                            <h2>Bitcoin Price Index</h2>
+                            <p>USD: ${data.bpi.USD.rate}</p>
+                            <p>GBP: ${data.bpi.GBP.rate}</p>
+                            <p>EUR: ${data.bpi.EUR.rate}</p>
+                        `);
+                    },
+                    error: function(error) {
+                        $('#crypto-data').html('<p>An error occurred while fetching data.</p>');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
