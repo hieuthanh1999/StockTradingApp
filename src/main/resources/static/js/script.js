@@ -75,7 +75,7 @@ function setupRowClickEvent() {
                     return;
                 }
                 displayStockData(obj);
-                drawChart(obj);
+                //drawChart(obj);
             }
         });
 
