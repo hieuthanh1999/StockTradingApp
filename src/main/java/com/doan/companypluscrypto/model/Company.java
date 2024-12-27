@@ -1,20 +1,35 @@
 package com.doan.companypluscrypto.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+// Xác định một entity là một class được ánh xạ vào một bảng trong cơ sở dữ liệu
 @Entity
 public class Company {
     @Id
-    public String name;
-    public String address;
-    public String phone;
-    public String email;
-    public String website;
-    public String description;
-    public String stockCode;
-    public String pic;
-    public String sector;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    private String name;
+    private String address;
+    private String phone;
+    private String email;
+    private String website;
+    private String description;
+    private String stockCode;
+    private String pic;
+    private String sector;
+    private int charterCapital;
+    private String establishmentInfo;
+    private int marketCap;
+
+
+    @OneToMany(mappedBy = "company",cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Events> events;  
 
     public Company() {
     }
@@ -89,6 +104,46 @@ public class Company {
     
     public void setSector(String major) {
         this.sector = major;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public List<Events> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Events> events) {
+        this.events = events;
+    }
+
+    public int getCharterCapital() {
+        return charterCapital;
+    }
+
+    public void setCharterCapital(int charterCapital) {
+        this.charterCapital = charterCapital;
+    }
+
+    public String getEstablishmentInfo() {
+        return establishmentInfo;
+    }
+
+    public void setEstablishmentInfo(String establishmentInfo) {
+        this.establishmentInfo = establishmentInfo;
+    }
+
+    public int getMarketCap() {
+        return marketCap;
+    }
+
+    public void setMarketCap(int marketCap) {
+        this.marketCap = marketCap;
     }
 }
 

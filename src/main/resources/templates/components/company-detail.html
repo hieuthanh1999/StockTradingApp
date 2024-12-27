@@ -1,0 +1,31 @@
+<div th:if="${company != null}">
+    <div class="card mt-4">
+        <div class="card-header">
+            Thông tin chi tiết về công ty
+        </div>
+        <div class="card-body">
+            <h5 class="card-title" th:text="${company.name}">Tên công ty</h5>
+            <p class="card-text" th:text="${company.description}">Mô tả công ty</p>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item" th:text="'Mã cổ phiếu: ' + ${company.stockCode}">Mã cổ phiếu: </li>
+                <li class="list-group-item" th:text="'Lĩnh vực: ' + ${company.sector}">Lĩnh vực: </li>
+                <li class="list-group-item" th:text="'Vốn hóa thị trường: ' + ${company.marketCap}">Vốn hóa thị trường: </li>
+            </ul>
+        </div>
+    </div>
+    <div class="card mt-4">
+        <div class="card-header">
+            Thông tin bổ sung về công ty
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Ban lãnh đạo</h5>
+            <p class="card-text" th:text="${company.pic}">Ban lãnh đạo</p>
+            <p class="card-text" th:text="'Vốn điều lệ: ' + ${company.charterCapital}">Vốn điều lệ: </p>
+            <p class="card-text" th:text="'Thông tin thành lập: ' + ${company.establishmentInfo}">Thông tin thành lập: </p>
+            <h5 class="card-title">Các sự kiện liên quan</h5>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item" th:each="event : ${company.events}" th:text="${event.name}">Sự kiện</li>
+            </ul>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Dashboard</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="d-flex justify-content-between mb-3">
+            <h2>Company Dashboard</h2>
+            <button class="btn btn-primary" id="addCompanyBtn">Add Company</button>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Phone</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="companyTableBody">
+                <!-- Company rows will be appended here by jQuery -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // Sample data
+            var companies = [
+                { id: 1, name: 'Company A', address: '123 Street', phone: '123-456-7890' },
+                { id: 2, name: 'Company B', address: '456 Avenue', phone: '987-654-3210' }
+            ];
+
+            function loadCompanies() {
+                $('#companyTableBody').empty();
+                companies.forEach(function(company) {
+                    $('#companyTableBody').append(`
+                        <tr>
+                            <td>${company.id}</td>
+                            <td>${company.name}</td>
+                            <td>${company.address}</td>
+                            <td>${company.phone}</td>
+                            <td>
+                                <button class="btn btn-warning btn-sm editBtn">Edit</button>
+                                <button class="btn btn-danger btn-sm deleteBtn">Delete</button>
+                            </td>
+                        </tr>
+                    `);
+                });
+            }
+
+            loadCompanies();
+
+            $('#addCompanyBtn').click(function() {
+                // Add company logic here
+                alert('Add Company button clicked');
+            });
+
+            $(document).on('click', '.editBtn', function() {
+                // Edit company logic here
+                alert('Edit button clicked');
+            });
+
+            $(document).on('click', '.deleteBtn', function() {
+                // Delete company logic here
+                alert('Delete button clicked');
+            });
+        });
+    </script>
+</body>
+</html>

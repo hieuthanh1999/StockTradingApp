@@ -11,10 +11,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
-
+// @Configuration là một annotation dùng để đánh dấu một class là một class cấu hình
 @Configuration
 public class SecurityConfig {
+    
     @Bean
+    // @SecurityFilterChain là một annotation dùng để cấu hình bộ lọc bảo mật
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(auth -> auth.requestMatchers("/admin/**")
@@ -33,12 +35,14 @@ public class SecurityConfig {
     }
 
     @Bean
+    // @AccessDeniedHandler là một interface dùng để xử lý khi người dùng không có quyền truy cập
     public AccessDeniedHandler accessDeniedHandler() {
         return (request, response, accessDeniedException) -> {
             response.sendRedirect("/access-denied");
         };
     }
-     @Bean
+    @Bean
+    // @UserDetailsService là một interface dùng để cung cấp thông tin người dùng
     public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
         UserDetails user = User.builder()
                 .username("user")
