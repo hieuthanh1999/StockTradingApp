@@ -72,4 +72,10 @@ public class MainController {
         return "/components/company-detail";
     }
     
+    @GetMapping("/crypto/find")
+    public String getCrypto(@RequestParam String cryptoCode) {
+    	return "/components/crypto-data";
+    	
+    }
+    
 }
