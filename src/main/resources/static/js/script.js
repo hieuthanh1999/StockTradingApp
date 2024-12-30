@@ -56,41 +56,50 @@ function changePage(element) {
     });
 }
 google.charts.load('current', { 'packages': ['corechart'] });
-   
+var c=0;
 function setupRowClickEvent() {
-    $('#companyTable tbody tr').click(function() {
-        var stockCode = $(this).find('td').eq(2).text();
-        console.log(stockCode);
-        $.ajax({
-            type: 'GET',
-            data: {
-                stockName: stockCode.toLocaleLowerCase(),
-                dateby: 7,
-            },
-            url: '/stock', // Replace with the actual API endpoint
-            dataType: "json",
-            success: function(obj) {
-                if (obj["Error Message"]) {
-                    alert("Không tìm thấy dữ liệu cho mã chứng khoán này");
-                    return;
+    $('#companyTable tbody tr').click(function(event) {
+        if (!$(event.target).is('button')) {
+            var stockCode = $(this).find('td').eq(2).text();
+            console.log(stockCode);
+            $.ajax({
+                type: 'GET',
+                data: {
+                    stockName: stockCode.toLocaleLowerCase(),
+                    dateby: 7,
+                },
+                url: '/stock', // Replace with the actual API endpoint
+                dataType: "json",
+                success: function(obj) {
+                    if (obj["Error Message"]) {
+                        alert("Không tìm thấy dữ liệu cho mã chứng khoán này");
+                        return;
+                    }
+                    displayStockData(obj);
+                    //drawChart(obj);
                 }
-                displayStockData(obj);
-                //drawChart(obj);
-            }
-        });
-
-        var companyId = $(this).attr('data-id');
-        console.log(companyId);
-        $.ajax({
-            url: '/company/' + companyId,
-            method: 'GET',
-            success: function(response) {
-                $('#companyDetails').html(response);
-            },
-            error: function(error) {
-                console.error('Error:', error);
-            }
-        });
+            });
+            
+            var companyId = $(this).attr('data-id');
+            console.log(companyId);
+            $.ajax({
+                url: '/company/' + companyId,
+                method: 'GET',
+                success: function(response) {
+                    $('#companyDetails').html(response);
+                },
+                error: function(error) {
+                    console.error('Error:', error);
+                }
+            });
+        } else {
+            console.log('Button clicked');
+            console.log($(event.target).text());
+            event.preventDefault();
+            event.stopPropagation();
+            // Manually trigger the desired action here
+            console.log('Button action triggered');
+        }
         
 
     });

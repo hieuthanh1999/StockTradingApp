@@ -49,7 +49,7 @@ public class MainController {
     @GetMapping("/company/find")
     public String findCompany(@RequestParam(defaultValue = "") String name, @RequestParam(defaultValue = "") String stockCode
                             , @RequestParam(defaultValue = "") String sector, Model model, @RequestParam(defaultValue = "0") int page
-                            , @RequestParam(defaultValue = "2") int size) {
+                            , @RequestParam(defaultValue = "5") int size) {
         Page<Company> resultList = companyService.findCompany(name, stockCode, sector, PageRequest.of(page, size));
         model.addAttribute("companies", resultList);
         model.addAttribute("currentPage", page);
@@ -70,12 +70,6 @@ public class MainController {
         Company company = companyService.getCompany(id);
         model.addAttribute("company", company);
         return "/components/company-detail";
-    }
-    
-    @GetMapping("/crypto/find")
-    public String getCrypto(@RequestParam String cryptoCode) {
-    	return "/components/crypto-data";
-    	
     }
     
 }

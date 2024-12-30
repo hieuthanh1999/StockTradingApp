@@ -5,7 +5,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.doan.companypluscrypto.model.Company;
 import com.doan.companypluscrypto.repository.CompanyRepository;
@@ -39,6 +41,28 @@ public class CompanyService {
         }
         throw new RuntimeException("Company not found");
     }
+
+    public void saveCompany(Company company) {
+        Optional<Company> companyOptional = companyRepository.findByName(company.getName());
+        if (companyOptional.isPresent() && company.getId() != 0 && companyOptional.get().getId() != company.getId()) {
+            //throw new ResponseStatusException(HttpStatus.CONFLICT, "Company already exists with the same name");
+        }
+        companyRepository.save(company);
+    }
+
+    public void deleteCompany(int id) {
+        if (companyRepository.existsById(id)) {
+            Company company = companyRepository.findById(id).orElseThrow(() -> new RuntimeException("Company not found"));
+            if (company.getEvents().isEmpty()) {
+                companyRepository.deleteById(id);
+            } else {
+                throw new RuntimeException("Cannot delete company with existing events");
+            }
+        } else {
+            throw new RuntimeException("Company not found");
+        }
+    }
+
 
     
 }

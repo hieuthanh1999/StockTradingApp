@@ -2,6 +2,8 @@ package com.doan.companypluscrypto.model;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,7 +26,7 @@ public class Events {
     @Temporal(TemporalType.DATE)
     private Date date;
 
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "company_id", nullable = false)
     private Company company;

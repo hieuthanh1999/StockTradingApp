@@ -19,13 +19,14 @@ public class SecurityConfig {
     // @SecurityFilterChain là một annotation dùng để cấu hình bộ lọc bảo mật
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .authorizeHttpRequests(auth -> auth.requestMatchers("/admin/**")
-            .hasRole("ADMIN")
-            .requestMatchers("/company/find").permitAll()
-            .anyRequest().permitAll())
-            .formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/home").permitAll())
-            .logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/").permitAll())
-            .exceptionHandling(exceptionHandling -> exceptionHandling.accessDeniedHandler(accessDeniedHandler()));
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/admin/**")
+                        .hasRole("ADMIN")
+                        .requestMatchers("/company/find").permitAll()
+                        .anyRequest().permitAll())
+                .formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/admin").permitAll())
+                .logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/").permitAll())
+                .exceptionHandling(exceptionHandling -> exceptionHandling.accessDeniedHandler(accessDeniedHandler()));
         return http.build();
     }
 
@@ -52,7 +53,7 @@ public class SecurityConfig {
 
         UserDetails admin = User.builder()
                 .username("admin")
-                .password(passwordEncoder.encode("password"))
+                .password(passwordEncoder.encode("admin"))
                 .roles("ADMIN")
                 .build();
 

@@ -14,4 +14,6 @@ public interface CompanyRepository extends JpaRepository<Company, Integer> {
     Page<Company> findByNameContainingOrStockCodeContainingOrSectorContaining(String name, String stockCode, String sector, Pageable pageable);
 
     Optional<Company> findById(int id);
+
+    Optional<Company> findByName(String name);
 }

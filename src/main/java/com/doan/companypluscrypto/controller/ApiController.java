@@ -42,8 +42,29 @@ public class ApiController {
     @GetMapping("/company/pagination")
     public ResponseEntity<Page<Company>> getCompanyPagination(@RequestParam(defaultValue = "") String name, @RequestParam(defaultValue = "") String stockCode
                             , @RequestParam(defaultValue = "") String sector, @RequestParam(defaultValue = "0") int page
-                            , @RequestParam(defaultValue = "2") int size) throws IOException, InterruptedException {
+                            , @RequestParam(defaultValue = "5") int size) throws IOException, InterruptedException {
         Page<Company> resultList = companyService.findCompany(name, stockCode, sector, PageRequest.of(page, size));
         return ResponseEntity.ok(resultList);
+    }
+
+    @GetMapping("/crypto/find")
+    public String getCrypto(@RequestParam String cryptoCode) {
+
+        String apiUrl = "https://api.coingecko.com/api/v3/coins/" + cryptoCode + "/market_chart?vs_currency=usd&days=7";
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+            .uri(URI.create(apiUrl))
+            .build();
+
+        HttpResponse<String> response;
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+            return "Error fetching data";
+        }
+
+        return response.body();
     }
 }
