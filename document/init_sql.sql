@@ -1,7 +1,7 @@
 -- Insert 10 sample companies
 INSERT INTO Company (name, address, phone, email, website, description, stockCode, pic, sector, charterCapital, establishmentInfo, marketCap) VALUES
-('Company 1', 'Address 1', 'Phone 1', 'email1@example.com', 'http://website1.com', 'Description 1', 'StockCode1', 'Pic1', 'Sector1', 1000000, 'Establishment Info 1', 5000000),
-('Company 2', 'Address 2', 'Phone 2', 'email2@example.com', 'http://website2.com', 'Description 2', 'StockCode2', 'Pic2', 'Sector2', 2000000, 'Establishment Info 2', 6000000),
+('Company 1', 'Address 1', 'Phone 1', 'email1@example.com', 'http://website1.com', 'Description 1', 'VNM', 'Pic1', 'Sector1', 1000000, 'Establishment Info 1', 5000000),
+('Company 2', 'Address 2', 'Phone 2', 'email2@example.com', 'http://website2.com', 'Description 2', 'FPT', 'Pic2', 'Sector2', 2000000, 'Establishment Info 2', 6000000),
 ('Company 3', 'Address 3', 'Phone 3', 'email3@example.com', 'http://website3.com', 'Description 3', 'StockCode3', 'Pic3', 'Sector3', 3000000, 'Establishment Info 3', 7000000),
 ('Company 4', 'Address 4', 'Phone 4', 'email4@example.com', 'http://website4.com', 'Description 4', 'StockCode4', 'Pic4', 'Sector4', 4000000, 'Establishment Info 4', 8000000),
 ('Company 5', 'Address 5', 'Phone 5', 'email5@example.com', 'http://website5.com', 'Description 5', 'StockCode5', 'Pic5', 'Sector5', 5000000, 'Establishment Info 5', 9000000),

@@ -1,9 +1,9 @@
 package com.doan.companypluscrypto.controller;
 
-import org.springframework.web.bind.annotation.RestController;
 
 import com.doan.companypluscrypto.model.Company;
 import com.doan.companypluscrypto.service.CompanyService;
+import com.doan.companypluscrypto.service.EventsService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
@@ -21,10 +20,15 @@ public class AdminController {
     @Autowired
     private CompanyService companyService;
 
+    @Autowired
+    private EventsService eventsService;
+
     @GetMapping("/admin")
     public String getMethodName() {
         return "/admin/admin";
     }
+
+     
 
     @GetMapping("/admin/company/edit/" + "{id}") 
     public String getMethodName(@PathVariable int id, Model model) {

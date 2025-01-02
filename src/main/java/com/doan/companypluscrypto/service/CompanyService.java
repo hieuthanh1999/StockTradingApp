@@ -5,9 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.doan.companypluscrypto.model.Company;
 import com.doan.companypluscrypto.repository.CompanyRepository;
@@ -18,17 +16,6 @@ public class CompanyService {
     @Autowired
     private CompanyRepository companyRepository;
 
-    public void addCompany() {
-        // Add company
-    }
-
-    public void updateCompany() {
-        // Update company
-    }
-
-    public void deleteCompany() {
-        // Delete company
-    }
     // Phương thức tìm kiếm company theo tên, mã cổ phiếu, ngành nghề
     public Page<Company> findCompany(String name, String stockCode, String sector, Pageable pageable) {
         return companyRepository.findByNameContainingOrStockCodeContainingOrSectorContaining(name, name, name, pageable);
