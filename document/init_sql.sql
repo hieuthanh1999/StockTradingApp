@@ -1,4 +1,5 @@
 -- Insert 20 sample companies
+
 INSERT INTO Company (name, address, phone, email, website, description, stockCode, pic, sector, charterCapital, establishmentInfo, marketCap) VALUES
 ('Vietcombank', '198 Tran Quang Khai, Hanoi', '024 3934 3137', 'info@vietcombank.com.vn', 'http://vietcombank.com.vn', 'Leading commercial bank in Vietnam', 'VCB', 'Pic1', 'Banking', 37000000000, 'Established in 1963', 300000000000),
 ('VietinBank', '108 Tran Hung Dao, Hanoi', '024 3942 1030', 'info@vietinbank.vn', 'http://vietinbank.vn', 'Major state-owned commercial bank', 'CTG', 'Pic2', 'Banking', 37000000000, 'Established in 1988', 200000000000),
