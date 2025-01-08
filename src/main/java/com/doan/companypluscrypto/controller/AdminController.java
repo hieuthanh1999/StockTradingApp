@@ -28,8 +28,6 @@ public class AdminController {
         return "/admin/admin";
     }
 
-     
-
     @GetMapping("/admin/company/edit/" + "{id}") 
     public String getMethodName(@PathVariable int id, Model model) {
         Company company = companyService.getCompany(id);
@@ -40,13 +38,13 @@ public class AdminController {
     @PostMapping("/admin/company/save")
     public String saveCompany(@ModelAttribute("company") Company company) {
         companyService.saveCompany(company);
-        return "redirect:/admin";
+        return "redirect:/company";
     }
     
     @GetMapping("/admin/company/delete/" + "{id}")
     public String deleteCompany(@PathVariable int id) {
         companyService.deleteCompany(id);
-        return "redirect:/admin";
+        return "redirect:/company";
     }
 
     @GetMapping("/admin/company/add")
@@ -57,6 +55,8 @@ public class AdminController {
         return "/admin/edit-company";
     }
     
+    
+
 
     
 }
