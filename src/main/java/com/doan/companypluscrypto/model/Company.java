@@ -23,9 +23,9 @@ public class Company {
     private String stockCode;
     private String pic;
     private String sector;
-    private int charterCapital;
+    private long charterCapital;
     private String establishmentInfo;
-    private int marketCap;
+    private long marketCap;
 
 
     @OneToMany(mappedBy = "company",cascade = CascadeType.ALL, orphanRemoval = true)
@@ -122,7 +122,7 @@ public class Company {
         this.events = events;
     }
 
-    public int getCharterCapital() {
+    public long getCharterCapital() {
         return charterCapital;
     }
 
@@ -138,7 +138,7 @@ public class Company {
         this.establishmentInfo = establishmentInfo;
     }
 
-    public int getMarketCap() {
+    public long getMarketCap() {
         return marketCap;
     }
 
