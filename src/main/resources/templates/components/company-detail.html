@@ -24,7 +24,9 @@
             <p class="card-text" th:text="'Thông tin thành lập: ' + ${company.establishmentInfo}">Thông tin thành lập: </p>
             <h5 class="card-title">Các sự kiện liên quan</h5>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item" th:each="event : ${company.events}" th:text="${event.name}">Sự kiện</li>
+                <li class="list-group-item" th:each="event : ${company.events}">
+                    <a th:href="@{${event.link}}" th:text="${event.name}" target="_blank" rel="noopener noreferrer">Sự kiện</a>
+                </li>
             </ul>
         </div>
     </div>

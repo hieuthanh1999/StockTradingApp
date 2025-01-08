@@ -23,6 +23,8 @@ public class Events {
 
     private String description;
 
+    private String link;
+
     @Temporal(TemporalType.DATE)
     private Date date;
 
@@ -34,11 +36,12 @@ public class Events {
     public Events() {
     }
 
-    public Events(String name, String description, Date date, Company company) {
+    public Events(String name, String description, Date date, Company company, String link) {
         this.name = name;
         this.description = description;
         this.date = date;
         this.company = company;
+        this.link = link;
     }
 
     public String getName() {
@@ -79,6 +82,14 @@ public class Events {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
     }
 
 }

@@ -12,6 +12,9 @@ import org.springframework.data.domain.PageRequest;
 
 import com.doan.companypluscrypto.model.Company;
 import com.doan.companypluscrypto.service.CompanyService;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 
 
@@ -24,7 +27,7 @@ public class MainController {
     // Phương thức trả về trang chủ
     @GetMapping("/")
     public String home() {
-        return "index";
+        return "redirect:/company";
     }
 
     // Phương thức trả về trang login
@@ -35,7 +38,8 @@ public class MainController {
 
     // Phương thức trả về trang company
     @GetMapping("/company")
-    public String company() {
+    public String company(Model model) {
+        
         return "company";
     }
 
@@ -49,7 +53,7 @@ public class MainController {
     @GetMapping("/company/find")
     public String findCompany(@RequestParam(defaultValue = "") String name, @RequestParam(defaultValue = "") String stockCode
                             , @RequestParam(defaultValue = "") String sector, Model model, @RequestParam(defaultValue = "0") int page
-                            , @RequestParam(defaultValue = "5") int size) {
+                            , @RequestParam(defaultValue = "10") int size) {
         Page<Company> resultList = companyService.findCompany(name, stockCode, sector, PageRequest.of(page, size));
         model.addAttribute("companies", resultList);
         model.addAttribute("currentPage", page);

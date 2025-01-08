@@ -19,12 +19,14 @@
             </a>
             <div class="collapse navbar-collapse">
             <ul class="navbar-nav ml-auto">
-            <li class="nav-item"></li>
+            <li class="nav-item">
             <a class="nav-link" th:href="@{/company}">Tìm công ty</a>
             </li>
-            <li class="nav-item"></li>
-            <a class="nav-link" th:href="@{/crypto}">Tìm tiền kỹ thuật số</a>
+            <li class="nav-item">
+                <a class="nav-link" th:if="${#authentication.principal == 'anonymousUser'}" th:href="@{/login}">Login</a>
+                <a class="nav-link" th:if="${#authentication.principal != 'anonymousUser'}" th:href="@{/logout}">Logout</a>
             </li>
+            
             </ul>
             </div>
         </nav>
@@ -103,7 +105,7 @@
                     }
                 });
             });
-
+            
         });
     </script>
     

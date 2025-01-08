@@ -24,7 +24,7 @@ public class SecurityConfig {
                         .hasRole("ADMIN")
                         .requestMatchers("/company/find").permitAll()
                         .anyRequest().permitAll())
-                .formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/admin").permitAll())
+                .formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/company").permitAll())
                 .logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/").permitAll())
                 .exceptionHandling(exceptionHandling -> exceptionHandling.accessDeniedHandler(accessDeniedHandler()));
         return http.build();

@@ -72,11 +72,12 @@ function setupRowClickEvent() {
                 dataType: "json",
                 success: function(obj) {
                     if (obj["Error Message"]) {
-                        alert("Không tìm thấy dữ liệu cho mã chứng khoán này");
+                        document.getElementById('ms').innerHTML = "Không tìm thấy dữ liệu cổ phiếu";
+                        document.getElementById('stockTableBody').innerHTML = '';
                         return;
                     }
                     displayStockData(obj);
-                    //drawChart(obj);
+                    drawChart(obj);
                 }
             });
             
@@ -103,6 +104,7 @@ function setupRowClickEvent() {
         
 
     });
+    $('#companyTable tbody tr:first').trigger('click');
 }
 
 function displayStockData(data) {

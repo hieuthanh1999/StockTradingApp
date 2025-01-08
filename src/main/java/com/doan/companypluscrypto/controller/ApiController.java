@@ -48,7 +48,7 @@ public class ApiController {
     @GetMapping("/company/pagination")
     public ResponseEntity<Page<Company>> getCompanyPagination(@RequestParam(defaultValue = "") String name, @RequestParam(defaultValue = "") String stockCode
                             , @RequestParam(defaultValue = "") String sector, @RequestParam(defaultValue = "0") int page
-                            , @RequestParam(defaultValue = "5") int size) throws IOException, InterruptedException {
+                            , @RequestParam(defaultValue = "10") int size) throws IOException, InterruptedException {
         Page<Company> resultList = companyService.findCompany(name, stockCode, sector, PageRequest.of(page, size));
         return ResponseEntity.ok(resultList);
     }
