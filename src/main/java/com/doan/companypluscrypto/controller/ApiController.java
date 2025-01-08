@@ -5,13 +5,18 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,6 +25,10 @@ import com.doan.companypluscrypto.model.Events;
 import com.doan.companypluscrypto.service.CompanyService;
 import com.doan.companypluscrypto.service.EventsService;
 // @RestController là một annotation kết hợp của @Controller và @ResponseBody
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
+
 @RestController
 public class ApiController {
 
@@ -80,5 +89,39 @@ public class ApiController {
         }
 
         return response.body();
+    }
+
+    @GetMapping("/admin/company/" + "{id}")
+    public ResponseEntity<Company> getMethodName(@PathVariable int id, Model model) {
+        return ResponseEntity.ok(companyService.getCompany(id));
+    }
+
+    @GetMapping("/admin/event/add")
+    public ResponseEntity<String> addEvent(@RequestParam(defaultValue = "") String name, @RequestParam(defaultValue = "") String description
+                    , @RequestParam(defaultValue = "") String date
+                    , @RequestParam(defaultValue = "") String link
+                    , @RequestParam int companyId) {
+        Events event = new Events();
+        event.setCompany(companyService.getCompany(companyId));
+        event.setName(name);
+        event.setDescription(description);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date eventDate;
+        try {
+            eventDate = formatter.parse(date);
+        } catch (ParseException e) {
+            return ResponseEntity.status(400).body("Invalid date format");
+        }
+        event.setDate(eventDate);
+        event.setLink(link);
+        eventsService.saveEvent(event);
+
+        return ResponseEntity.status(200).body("Event saved successfully");
+    }
+
+    @DeleteMapping("/admin/event/delete/" + "{id}")
+    public ResponseEntity<String> deleteEvent(@PathVariable int id) {
+        eventsService.deleteEvent(id);
+        return ResponseEntity.status(200).body("Event deleted successfully");
     }
 }

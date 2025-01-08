@@ -12,9 +12,6 @@ import org.springframework.data.domain.PageRequest;
 
 import com.doan.companypluscrypto.model.Company;
 import com.doan.companypluscrypto.service.CompanyService;
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
-
-import jakarta.servlet.http.HttpServletRequest;
 
 
 

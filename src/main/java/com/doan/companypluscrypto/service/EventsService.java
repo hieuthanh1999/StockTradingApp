@@ -17,5 +17,13 @@ public class EventsService {
     public Page<Events> findEvents(int id, String name, PageRequest of) {
         return eventsRepository.findByNameAndCompanyId(name, id, of);
     }
+
+    public void saveEvent(Events event) {
+        eventsRepository.save(event);
+    }
+
+    public void deleteEvent(int id) {
+        eventsRepository.deleteById(id);
+    }
     
 }

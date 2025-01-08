@@ -80,7 +80,7 @@
     function deleteCompany(id) {
         if (confirm('Bạn có chắc chắn muốn xoá công ty này không?')) {
             $.ajax({
-                url: '/company/delete/' + id,
+                url: '/admin/company/delete/' + id,
                 method: 'DELETE',
                 success: function(response) {
                     alert('Xoá thành công');
@@ -94,7 +94,135 @@
     }
 
     function viewEvents(id) {
-        window.location.href = '/company/events/' + id;
+        $('#eventsModal').remove();
+        $.ajax({
+            url: '/admin/company/' + id,
+            method: 'GET',
+            success: function(response) {
+            let events = response.events;
+            let modalContent = '<div class="modal fade" id="eventsModal" tabindex="-1" role="dialog" aria-labelledby="eventsModalLabel" aria-hidden="true">' +
+                '<div class="modal-dialog" role="document">' +
+                '<div class="modal-content">' +
+                '<div class="modal-header">' +
+                '<h5 class="modal-title" id="eventsModalLabel">Events</h5>' +
+                '<button type="button" class="close" data-dismiss="modal" aria-label="Close">' +
+                '<span aria-hidden="true">&times;</span>' +
+                '</button>' +
+                '</div>' +
+                '<div class="modal-body">' +
+                '<ul class="list-group">';
+            modalContent += '<button class="btn btn-success mb-3" onclick="addEvent(' + id + ')">Add Event</button>';
+            
+            events.forEach(event => {
+                console.log(event);
+                modalContent += '<li class="list-group-item d-flex justify-content-between align-items-center">' +
+                event.name +
+                '<button class="btn btn-danger btn-sm" onclick="deleteEvent(' + event.id + ')">Xoá</button>' +
+                '</li>';
+            });
+
+            modalContent += '</ul>' +
+                '</div>' +
+                '<div class="modal-footer">' +
+                '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
+
+            $('body').append(modalContent);
+            $('#eventsModal').modal('show');
+            },
+            error: function(response) {
+            alert('Không thể tải danh sách sự kiện');
+            }
+        });
+    }
+
+    function deleteEvent(eventId) {
+        if (confirm('Bạn có chắc chắn muốn xoá sự kiện này không?')) {
+            $.ajax({
+            url: '/admin/event/delete/' + eventId,
+            method: 'DELETE',
+            success: function(response) {
+                alert('Xoá sự kiện thành công');
+                $('#eventsModal').modal('hide');
+            },
+            error: function(response) {
+                alert('Xoá sự kiện thất bại');
+            }
+            });
+        }
+    }
+    function addEvent(companyId) {
+        $('#addEventModal').remove();
+        let modalContent = '<div class="modal fade" id="addEventModal" tabindex="-1" role="dialog" aria-labelledby="addEventModalLabel" aria-hidden="true">' +
+            '<div class="modal-dialog" role="document">' +
+            '<div class="modal-content">' +
+            '<div class="modal-header">' +
+            '<h5 class="modal-title" id="addEventModalLabel">Add Event</h5>' +
+            '<button type="button" class="close" data-dismiss="modal" aria-label="Close">' +
+            '<span aria-hidden="true">&times;</span>' +
+            '</button>' +
+            '</div>' +
+            '<div class="modal-body">' +
+            '<form id="addEventForm">' +
+            '<div class="form-group">' +
+            '<label for="eventName">Event Name</label>' +
+            '<input type="text" class="form-control" id="eventName" name="eventName" required>' +
+            '</div>' +
+            '<div class="form-group">' +
+            '<label for="eventDate">Event Date</label>' +
+            '<input type="date" class="form-control" id="eventDate" name="eventDate" required>' +
+            '</div>' +
+            '<div class="form-group">' +
+            '<label for="eventLink">Event Link</label>' +
+            '<input type="url" class="form-control" id="eventLink" name="eventLink" required>' +
+            '</div>' +
+            '<div class="form-group">' +
+            '<label for="eventDescription">Event Description</label>' +
+            '<textarea class="form-control" id="eventDescription" name="eventDescription" required></textarea>' +
+            '</div>' +
+            '</form>' +
+            '</div>' +
+            '<div class="modal-footer">' +
+            '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>' +
+            '<button type="button" class="btn btn-primary" onclick="saveEvent(' + companyId + ')">Save Event</button>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '</div>';
+
+        $('body').append(modalContent);
+        $('#addEventModal').modal('show');
+    }
+
+    function saveEvent(companyId) {
+        let eventName = $('#eventName').val();
+        let eventDate = $('#eventDate').val();
+        let eventLink = $('#eventLink').val();
+        let eventDescription = $('#eventDescription').val();
+
+        if (!eventName || !eventDate || !eventLink || !eventDescription) {
+            alert('Không được để trống dòng nào');
+            return;
+        }
+
+        $.ajax({
+            url: '/admin/event/add',
+            method: 'GET',
+            contentType: 'application/json',
+            data: { companyId: companyId, name: eventName, date: eventDate, link: eventLink, description: eventDescription },
+            success: function(response) {
+                alert('Event added successfully');
+                $('#addEventModal').modal('hide');
+                $('#addEventModal').remove();
+                viewEvents(companyId);
+            },
+            error: function(response) {
+                alert('Failed to add event');
+            }
+        });
     }
 </script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
