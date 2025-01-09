@@ -74,6 +74,7 @@ function setupRowClickEvent() {
                     if (obj["Error Message"]) {
                         document.getElementById('ms').innerHTML = "Không tìm thấy dữ liệu cổ phiếu";
                         document.getElementById('stockTableBody').innerHTML = '';
+                        document.getElementById('chartContainer').innerHTML = '';
                         return;
                     }
                     displayStockData(obj);

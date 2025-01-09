@@ -126,7 +126,7 @@ public class Company {
         return charterCapital;
     }
 
-    public void setCharterCapital(int charterCapital) {
+    public void setCharterCapital(long charterCapital) {
         this.charterCapital = charterCapital;
     }
 
@@ -142,7 +142,7 @@ public class Company {
         return marketCap;
     }
 
-    public void setMarketCap(int marketCap) {
+    public void setMarketCap(long marketCap) {
         this.marketCap = marketCap;
     }
 }
