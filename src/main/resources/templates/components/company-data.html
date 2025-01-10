@@ -81,7 +81,7 @@
         if (confirm('Bạn có chắc chắn muốn xoá công ty này không?')) {
             $.ajax({
                 url: '/admin/company/delete/' + id,
-                method: 'DELETE',
+                method: 'GET',
                 success: function(response) {
                     alert('Xoá thành công');
                     window.location.reload();
