@@ -55,8 +55,4 @@ public class AdminController {
         return "/admin/edit-company";
     }
     
-    
-
-
-    
 }
